@@ -292,6 +292,12 @@
                         }
                     });
 
+                    $scope.$watch('psClass', function(newValue, oldValue){
+                        if (!newValue){ return;}
+                        if (newValue==oldValue) {return;}
+                        el.removeClass(oldValue);
+                        el.addClass(newValue);
+                    });
 
                     // Events
 
