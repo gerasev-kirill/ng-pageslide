@@ -30,7 +30,7 @@
                     psContainer: '@',
                     psKeyListener: '@',
                     psBodyClass: '@',
-                    psClickOutside: '@',
+                    psClickOutside: '=?',
                     onopen: '=?',
                     onclose: '=?'
                 },
@@ -47,7 +47,6 @@
                     param.container = $scope.psContainer || false;
                     param.keyListener = $scope.psKeyListener === 'true';
                     param.bodyClass = $scope.psBodyClass || false;
-                    param.clickOutside = $scope.psClickOutside !== 'false';
 
                     param.push = param.push && !param.container;
 
@@ -206,7 +205,7 @@
                             $document.off('keydown', handleKeyDown);
                         }
 
-                        if (param.clickOutside) {
+                        if ($scope.psClickOutside) {
                             $document.off('touchend click', onBodyClick);
                         }
                         isOpen = false;
@@ -252,7 +251,7 @@
                             $document.on('keydown', handleKeyDown);
                         }
 
-                        if (param.clickOutside) {
+                        if ($scope.psClickOutside) {
                             $document.on('touchend click', onBodyClick);
                         }
                         setBodyClass('open');
@@ -297,6 +296,13 @@
                         if (newValue==oldValue) {return;}
                         el.removeClass(oldValue);
                         el.addClass(newValue);
+                    });
+
+					$scope.$watch('psClickOutside', function(newValue, oldValue){
+                        if (newValue==oldValue) {return;}
+						if(!newValue){
+                            $document.off('touchend click', onBodyClick);
+						}
                     });
 
                     // Events
